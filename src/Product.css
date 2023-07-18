@@ -1,0 +1,33 @@
+
+.product-table {
+    width: 50%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-left: 320px;
+    box-shadow: 0 10px 8px rgb(89, 7, 77);
+}
+h1  {
+    text-align: center;
+    color: darkmagenta;
+}
+.product-table th,
+.product-table td {
+    color: darkmagenta;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-table th {
+    background-color: #f2f2f2;
+}
+
+.product-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.product-table td:last-child {
+    text-align: center;
+}
+
+
