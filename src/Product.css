@@ -1,14 +1,12 @@
 
 .product-table {
-    width: 50%;
+    width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    margin-left: 320px;
-    box-shadow: 0 10px 8px rgb(89, 7, 77);
+    box-shadow: 0 10px 8px rgb(175, 19, 155);
 }
 h1  {
     text-align: center;
-    color: darkmagenta;
 }
 .product-table th,
 .product-table td {
@@ -30,4 +28,11 @@ h1  {
     text-align: center;
 }
 
+.form-group {
+    margin-top: 10px;
+}
 
+.search-name {
+    float: right;
+    padding: 10px;
+}

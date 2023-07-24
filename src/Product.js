@@ -1,13 +1,17 @@
 import {Component} from "react";
 import "./Product.css";
+
+
+
+
 export default class Product extends Component {
     constructor(props) {
         super(props);
         this.state = {
             index:0,
             name:"",
-            price:0,
             action:"ADD PRODUCT",
+            search: '',
             products: [
                 {
                     name: 'Iphone',
@@ -22,8 +26,10 @@ export default class Product extends Component {
                     price: 1000
                 }
             ],
-        }
+            filteredProducts: []
+        };
     };
+
     changeName = (e) => {
         this.setState({
             name: e.target.value
@@ -69,16 +75,62 @@ export default class Product extends Component {
         });
     }
 
+    searchByName = (name) => {
+        if (name === "") {
+            this.setState({
+                filteredProducts: [],
+                search: ""
+            });
+        } else {
+            const filteredProducts = this.state.products.filter((product) =>
+                product.name.toLowerCase().includes(name.toLowerCase())
+            );
+            this.setState({
+                filteredProducts: filteredProducts,
+                search: name
+            });
+        }
+    };
         deleteProduct = (name) => this.setState({
             products:this.state.products.filter(product => product.name !== name)
         });
 
-
     render() {
-        const { products, name, price, action } = this.state;
+        const { products, filteredProducts, name, price, action, search } = this.state;
+        const displayProducts = search === "" ? products : filteredProducts;
+
         return (
             <>
-                        <h1>List Product</h1>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <h1 style={{color: "#8d177d"}}>{action}</h1>
+                            <div className="form-group">
+                                <label>Name</label>
+                                <input type="text" name="" className="form-control" onChange={this.changeName} value={name}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Price</label>
+                                <input type="text" name=""  className="form-control" onChange={this.changePrice} value={price}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button type="button" className="btn btn-primary"
+                                        onClick={action === "ADD PRODUCT" ? this.addProduct : this.updateProduct}>
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/*form table*/}
+
+                <div className={"col-md-8"}>
+                        <h1 style={{color: "#8d177d"}}>List Product</h1>
+                    <div className={"search-name"}>
+                        <input type="text" onChange={(e) => this.searchByName(e.target.value)} id={"searchName"} placeholder={"Search"} />
+                    </div>
                         <table className={"product-table"}>
                             <thead>
                             <tr>
@@ -90,7 +142,7 @@ export default class Product extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {products.map((product,index) => (
+                            {displayProducts.map((product,index) => (
                                 <tr key = {index}>
                                     <td>{index + 1}</td>
                                     <td>{product.name}</td>
@@ -109,27 +161,6 @@ export default class Product extends Component {
                             ))}
                             </tbody>
                         </table>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-4">
-                            <h1>{action}</h1>
-                            <div className="form-group">
-                                <label>Name</label>
-                                <input type="text" name="" className="form-control" onChange={this.changeName} value={name}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Price</label>
-                                <input type="text" name=""  className="form-control" onChange={this.changePrice} value={price}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <button type="button" className="btn btn-primary"  onClick={action === "ADD PRODUCT" ? this.addProduct : this.updateProduct}>
-                                    Add
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </>
         )
